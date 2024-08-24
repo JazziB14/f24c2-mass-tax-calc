@@ -1,67 +1,88 @@
-// You are a web developer given the task to create a Massachusetts Tax Calculator Engine
-// Javascript will be used to identify the amount of taxes due according to the income submitted by the user
-// the only state being checked for is Massachusetts
-// the 3 tax brackets are the following: 
-// 5% -  up to $50,000
-// 5.5% - between $50,001 - $100,000
-// 6% - above $100,000
+//Create a comprehensive New England Tax Calculator 
+//that allows users to calculate taxes for all New England states, 
+//with an improved user interface and enhanced functionality.
 
-// Steps to accomplish this project
-
-// 1. Tax Bracket #1: 5% -  up to $50,000
-// When the income submitted is less than or equal to $50,000, output the calculation for 5% for the tax amount due
-//
-const grossIncome = 50_000;
-const TaxBracket1 = 0.05
-const TaxBracket2 = 0.055
-const TaxBracket3 = 0.06
+const maTaxRate = 0.0423;
+const nhTaxRate = 0.05;
+const meTaxRate = 0.05;
+const ctTaxRate = 0.0635;
+const vtTaxRate = 0.06;
+const riTaxRate = 0.07;
+const state = "";
 
 const inputFromHTML = document.querySelector("input");
+const selectFromHTML = document.querySelector('select');
 const formFromHTML = document.querySelector("form");
+const resultElement = document.querySelector("#result");
+// const someNameElement = document.querySelector("input");
 
-// Watch for clicks on the form:
-formFromHTML.addEventListener("submit", function(event){  
-    event.preventDefault();
 
-    const grossIncomefromHTMLForm = inputFromHTML.value;
+//Watch for clicks on the form:
+formFromHTML.addEventListener("submit", function (event) {
+  event.preventDefault();
 
+  const grossIncomefromHTMLForm = inputFromHTML.value;
+  const stateFromHTMLForm = selectFromHTML.value;
+  
+    console.log(grossIncomefromHTMLForm);
+    console.log(stateFromHTMLForm);
+
+    console.log(resultElement);
+  
+  
    
-    if( grossIncomefromHTMLForm < 0 ){
+  
+  
+  // TODO: write a control logic that calculates the state tax based on the state the user select 
+  // from your form 
+  //calculateTax(maTaxRate, grossIncomefromHTMLForm);
+  
+  if (stateFromHTMLForm === "VT") {
+    calculateTax(vtTaxRate, grossIncomefromHTMLForm);
+  }
 
-        console.log(`Your gross income is too low`)
+  if (stateFromHTMLForm === "CT") {
+    calculateTax(ctTaxRate, grossIncomefromHTMLForm);
+  }
 
-    }
-    
-    if(grossIncomefromHTMLForm > 0 && grossIncomefromHTMLForm <= 50_000 ){
+  if (stateFromHTMLForm === "MA") {
+    calculateTax(maTaxRate, grossIncomefromHTMLForm);
+  }
 
-        const grossIncomefromHTMLForm = inputFromHTML.value;
-        taxDue = grossIncomefromHTMLForm * TaxBracket1;
-        console.log(`Your gross income is ${grossIncomefromHTMLForm}`)
-        console.log(`Your tax amount due is ${taxDue}`)
-        
+  if (stateFromHTMLForm === "NH") {
+    calculateTax(nhTaxRate, grossIncomefromHTMLForm);
+  }
 
-    }
-    
-    if(grossIncomefromHTMLForm > 50_000 && grossIncomefromHTMLForm <= 100_000 ){
+  if (stateFromHTMLForm === "ME") {
+    calculateTax(meTaxRate, grossIncomefromHTMLForm);
+  }
+  if (stateFromHTMLForm === "RI") {
+    calculateTax(riTaxRate, grossIncomefromHTMLForm);
+  }
 
-        const grossIncomefromHTMLForm = inputFromHTML.value;
-        taxDue = grossIncomefromHTMLForm * TaxBracket2;
-        console.log(`Your gross income is ${grossIncomefromHTMLForm}`)
-        console.log(`Your tax amount due is ${taxDue}`)
-        
-    }
-
-    if( grossIncomefromHTMLForm >= 100_000 ){
-
-        const grossIncomefromHTMLForm = inputFromHTML.value;
-        taxDue = grossIncomefromHTMLForm * TaxBracket3;
-        console.log(`Your gross income is ${grossIncomefromHTMLForm}`)
-        console.log(`Your tax amount due is ${taxDue}`)
-        
-        
-
-    }
 })
+
+// when that happens, get the value of the input
+function calculateTax(stateTaxRate, grossIncome) {
+
+  console.log(`the tax rate is: ${stateTaxRate}`)
+  console.log(`the gross income  is: ${grossIncome}`)
+  //do MA stuff
+
+  if (grossIncome >= 200) {
+
+    console.log(`Your gross income is greater than $200 | ${grossIncome}`)
+
+  } else {
+    // do some stuff
+    const taxDue = grossIncome * stateTaxRate;
+    const netIncome = grossIncome - taxDue;
+
+    console.log(`Your gross income is less than $200 | ${grossIncome}`)
+  }
+  resultElement.innerHTML = `<div> <p> Your gross income is ${grossIncome} and your tax rate is ${stateTaxRate} </p> </div>`;
+}
+
 
 
 
